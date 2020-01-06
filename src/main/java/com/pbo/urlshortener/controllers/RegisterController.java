@@ -6,12 +6,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class LoginController {
+public class RegisterController {
 
-    @RequestMapping(value = { "/login" }, method = RequestMethod.GET)
-    public ModelAndView login() {
+    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    public ModelAndView register() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("pages/login"); // resources/templates/pages/login.html
+        modelAndView.setViewName("pages/register"); // resources/template/pages/register.html
         return modelAndView;
     }
 
