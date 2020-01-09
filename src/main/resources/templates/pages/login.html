@@ -42,6 +42,9 @@
                                         <input type="password" name="password" class="form-control form-control-user"
                                                id="password" th:placeholder="Password">
                                     </div>
+                                    <div align="center" th:if="${param.error}">
+                                        <p style="font-size: 20; color: #FF1C19;">Email or Password is invalid.</p>
+                                    </div>
                                     <div class="form-group">
                                         <div class="custom-control custom-checkbox small">
                                             <input type="checkbox" class="custom-control-input" id="customCheck">

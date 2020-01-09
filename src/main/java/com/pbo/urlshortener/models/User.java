@@ -1,6 +1,10 @@
 package com.pbo.urlshortener.models;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Entity
@@ -8,18 +12,27 @@ import java.util.Set;
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "auth_user_id")
     private int id;
 
+    @NotNull(message = "First name is required")
+    @Length(min = 1, message = "First Name should be at least 1 character")
     @Column(name = "first_name")
     private String name;
 
+    @NotNull(message = "Last name is required")
+    @Length(min = 1, message = "Last Name should be at least 1 character")
     @Column(name = "last_name")
     private String lastName;
 
+    @NotNull(message = "Email is required")
+    @Email(message = "Email is invalid")
     @Column(name = "email")
     private String email;
 
+    @NotNull(message = "Password is required")
+    @Length(min = 5, message = "Password should be at least 5 characters")
     @Column(name = "password")
     private String password;
 
