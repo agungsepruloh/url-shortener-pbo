@@ -19,7 +19,7 @@ public class User {
     @NotNull(message = "First name is required")
     @Length(min = 1, message = "First Name should be at least 1 character")
     @Column(name = "first_name")
-    private String name;
+    private String firstName;
 
     @NotNull(message = "Last name is required")
     @Length(min = 1, message = "Last Name should be at least 1 character")
@@ -51,12 +51,12 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
