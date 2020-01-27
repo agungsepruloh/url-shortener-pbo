@@ -1,5 +1,6 @@
 package com.pbo.urlshortener.controllers;
 
+import com.pbo.urlshortener.models.Url;
 import com.pbo.urlshortener.models.User;
 import com.pbo.urlshortener.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,15 +18,15 @@ public class DashboardController {
     UserRepository userRepository;
 
     @RequestMapping(value = {"/", "/dashboard"})
-    public ModelAndView dashboard(HttpServletRequest request) {
-        ModelAndView modelAndView = new ModelAndView();
     public ModelAndView dashboard(HttpServletRequest request, Model model) {
+        Url url = new Url();
         String email = request.getUserPrincipal().getName();
         User user = userRepository.findByEmail(email);
         String requestServletPath = request.getServletPath();
 
         ModelAndView modelAndView = new ModelAndView();
         model.addAttribute("user", user);
+        modelAndView.addObject("url", url);
         // resources/templates/pages/dashboard.html
         modelAndView.setViewName(requestServletPath.equals("/") ? "redirect:/dashboard" : "pages/dashboard");
         return modelAndView;

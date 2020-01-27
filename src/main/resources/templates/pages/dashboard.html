@@ -54,28 +54,24 @@
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Original URL</th>
-                                    <th>Shorted URL</th>
-                                    <th>Create date</th>
-                                    <th>Actions</th>
-                                </tr>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Original URL</th>
+                                        <th>Shorted URL</th>
+                                        <th>Create date</th>
+                                        <th>Actions</th>
+                                    </tr>
                                 </thead>
 
                                 <tbody>
-                                <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td><a class="btn-link" href="">https://www.youtube.com/watch?v=Xf6zNjh4Ux8</a></td>
-                                    <td><a class="btn-link" href="">https://www.urls.com/abcd</a></td>
-                                    <td>2011/04/25</td>
+                                <tr th:each="url : ${user.urls}">
+                                    <td th:text="${url.name}"></td>
+                                    <td><a class="btn-link" th:href="@{https://{originalUrl}(originalUrl=${url.originalUrl})}" th:text="${url.originalUrl}"></a></td>
+                                    <td><a class="btn-link" th:href="@{/{hash}(hash=${url.hash})}" th:text="${url.hash}"></a></td>
+                                    <td th:text="${url.createDate}"></td>
                                     <td>
-                                        <button class="btn btn-success">
-                                            <i class="fas fa-edit"></i> Edit
-                                        </button>
-                                        <button class="btn btn-danger">
-                                            <i class="fas fa-trash-alt"></i> Delete
-                                        </button>
+                                        <a th:href="@{/edit/{id}(id=${url.id})}" class="btn btn-success"><i class="fas fa-edit"></i> Edit</a>
+                                        <a th:href="@{/delete/{id}(id=${url.id})}" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</a>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -119,23 +115,7 @@
 
 <!-- Add New URL Modal -->
 <div class="modal fade" id="addUrlModal" tabindex="-1" role="dialog" aria-labelledby="addUrlModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addUrlModalLabel">Add New URL</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Submit</button>
-            </div>
-        </div>
-    </div>
+    <th:block th:include="components/modals :: addNewUrl(${url})"></th:block>
 </div>
 
 <!-- Logout Modal-->
