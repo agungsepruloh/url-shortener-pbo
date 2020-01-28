@@ -14,8 +14,8 @@ public class Url {
     @Column(name = "id")
     private int id;
 
-    @NotNull(message = "Name name is required")
-    @Length(min = 1, message = "Name should be at least 1 character")
+    @NotNull(message = "Title name is required")
+    @Length(min = 1, message = "Title should be at least 1 character")
     @Column(name = "title")
     private String title;
 
