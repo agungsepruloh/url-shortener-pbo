@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -19,7 +20,7 @@ public class User {
     @NotNull(message = "First name is required")
     @Length(min = 1, message = "First Name should be at least 1 character")
     @Column(name = "first_name")
-    private String name;
+    private String firstName;
 
     @NotNull(message = "Last name is required")
     @Length(min = 1, message = "Last Name should be at least 1 character")
@@ -43,6 +44,9 @@ public class User {
     @JoinTable(name = "auth_user_role", joinColumns = @JoinColumn(name = "auth_user_id"), inverseJoinColumns = @JoinColumn(name = "auth_role_id"))
     private Set<Role> roles;
 
+    @OneToMany(mappedBy = "user")
+    private List<Url> urls;
+
     public int getId() {
         return id;
     }
@@ -51,12 +55,12 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
@@ -99,6 +103,12 @@ public class User {
         this.roles = roles;
     }
 
+    public List<Url> getUrls() {
+        return urls;
+    }
 
+    public void setUrls(List<Url> urls) {
+        this.urls = urls;
+    }
 }
 

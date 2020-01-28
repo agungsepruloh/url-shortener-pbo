@@ -1,16 +1,34 @@
 package com.pbo.urlshortener.controllers;
 
+import com.pbo.urlshortener.models.Url;
+import com.pbo.urlshortener.models.User;
+import com.pbo.urlshortener.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class DashboardController {
 
-    @RequestMapping(value = {"/dashboard"})
-    public ModelAndView dashboard() {
+    @Autowired
+    UserRepository userRepository;
+
+    @RequestMapping(value = {"/", "/dashboard"})
+    public ModelAndView dashboard(HttpServletRequest request, Model model) {
+        Url url = new Url();
+        String email = request.getUserPrincipal().getName();
+        User user = userRepository.findByEmail(email);
+        String requestServletPath = request.getServletPath();
+
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("pages/dashboard"); // resources/templates/pages/dashboard.html
+        model.addAttribute("user", user);
+        modelAndView.addObject("url", url);
+        // resources/templates/pages/dashboard.html
+        modelAndView.setViewName(requestServletPath.equals("/") ? "redirect:/dashboard" : "pages/dashboard");
         return modelAndView;
     }
 

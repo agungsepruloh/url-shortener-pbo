@@ -33,7 +33,7 @@
 
             <!-- Topbar -->
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-                <th:block th:include="components/topbar :: topbar"></th:block>
+                <th:block th:include="components/topbar :: topbar(${user})"></th:block>
             </nav>
             <!-- End of Topbar -->
 
@@ -41,7 +41,54 @@
             <div class="container-fluid">
 
                 <!-- Page Heading -->
-                <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
+
+                <!-- DataTable -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h3 class="m-0 font-weight-bold float-left">My Url Data</h3>
+                        <button class="btn btn-primary float-right" data-toggle="modal" data-target="#addUrlModal">
+                            <i class="fas fa-plus"></i> Add
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Original URL</th>
+                                        <th>Shorted URL</th>
+                                        <th>Create date</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                <tr th:each="url : ${user.urls}">
+                                    <td th:text="${url.name}"></td>
+                                    <td><a class="btn-link" th:href="@{https://{originalUrl}(originalUrl=${url.originalUrl})}" th:text="${url.originalUrl}"></a></td>
+                                    <td><a class="btn-link" th:href="@{/{hash}(hash=${url.hash})}" th:text="${url.hash}"></a></td>
+                                    <td th:text="${url.createDate}"></td>
+                                    <td>
+                                        <a th:href="@{/edit/{id}(id=${url.id})}" class="btn btn-success"><i class="fas fa-edit"></i> Edit</a>
+                                        <a th:href="@{/delete/{id}(id=${url.id})}" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+
+                                <tfoot>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Original URL</th>
+                                    <th>Shorted URL</th>
+                                    <th>Create date</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
 
             </div>
             <!-- /.container-fluid -->
@@ -65,6 +112,11 @@
 <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
 </a>
+
+<!-- Add New URL Modal -->
+<div class="modal fade" id="addUrlModal" tabindex="-1" role="dialog" aria-labelledby="addUrlModalLabel" aria-hidden="true">
+    <th:block th:include="components/modals :: addNewUrl(${url})"></th:block>
+</div>
 
 <!-- Logout Modal-->
 <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
