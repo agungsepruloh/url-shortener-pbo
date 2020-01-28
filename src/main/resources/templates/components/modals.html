@@ -12,7 +12,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addUrlModalLabel">Add New URL</h5>
+                <h5 class="modal-title" id="titleModal">Add New URL</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -24,8 +24,18 @@
                                placeholder="Title">
                     </div>
                     <div class="form-group">
-                        <input type="text" th:field="*{originalUrl}" class="form-control form-control-user" id="url"
+                        <input type="text" th:field="*{originalUrl}" class="form-control form-control-user" id="originalUrl"
                                placeholder="URL">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <input id="isGenerate" type="checkbox" aria-label="Checkbox for following text input" >
+                            </div>
+                        </div>
+                        <label class="form-control form-check-label" for="isGenerate">
+                            Generate Hash
+                        </label>
                     </div>
                     <div class="form-group">
                         <input type="text" th:field="*{hash}" class="form-control form-control-user" id="hash"

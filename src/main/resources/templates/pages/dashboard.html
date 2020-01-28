@@ -43,19 +43,20 @@
                 <!-- Page Heading -->
 
                 <!-- DataTable -->
+                <div id="alerts"></div>
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
                         <h3 class="m-0 font-weight-bold float-left">My Url Data</h3>
-                        <button class="btn btn-primary float-right" data-toggle="modal" data-target="#addUrlModal">
+                        <button id="addNewButton" class="btn btn-primary float-right" data-toggle="modal" data-target="#addUrlModal">
                             <i class="fas fa-plus"></i> Add
                         </button>
                     </div>
                     <div class="card-body">
-                        <div class="table-responsive">
+                        <div class="table-responsive" id="table-div">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th>Name</th>
+                                        <th>Title</th>
                                         <th>Original URL</th>
                                         <th>Shorted URL</th>
                                         <th>Create date</th>
@@ -65,7 +66,7 @@
 
                                 <tbody>
                                 <tr th:each="url : ${user.urls}">
-                                    <td th:text="${url.name}"></td>
+                                    <td th:text="${url.title}"></td>
                                     <td><a class="btn-link" th:href="@{https://{originalUrl}(originalUrl=${url.originalUrl})}" th:text="${url.originalUrl}"></a></td>
                                     <td><a class="btn-link" th:href="@{/{hash}(hash=${url.hash})}" th:text="${url.hash}"></a></td>
                                     <td th:text="${url.createDate}"></td>
@@ -78,7 +79,7 @@
 
                                 <tfoot>
                                 <tr>
-                                    <th>Name</th>
+                                    <th>Title</th>
                                     <th>Original URL</th>
                                     <th>Shorted URL</th>
                                     <th>Create date</th>
