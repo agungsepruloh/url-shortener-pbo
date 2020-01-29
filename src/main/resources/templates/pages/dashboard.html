@@ -66,13 +66,21 @@
 
                                 <tbody>
                                 <tr th:each="url : ${user.urls}">
-                                    <td th:text="${url.title}"></td>
-                                    <td><a class="btn-link" th:href="@{https://{originalUrl}(originalUrl=${url.originalUrl})}" th:text="${url.originalUrl}"></a></td>
-                                    <td><a class="btn-link" th:href="@{/{hash}(hash=${url.hash})}" th:text="${url.hash}"></a></td>
-                                    <td th:text="${url.createDate}"></td>
-                                    <td>
-                                        <a th:href="@{/edit/{id}(id=${url.id})}" class="btn btn-success"><i class="fas fa-edit"></i> Edit</a>
-                                        <a th:href="@{/delete/{id}(id=${url.id})}" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</a>
+                                    <td th:text="${url.title}" id="title-data"></td>
+                                    <td id="original-url-data">
+                                        <a class="btn-link" th:href="@{https://{originalUrl}(originalUrl=${url.originalUrl})}" th:text="${url.originalUrl}"></a>
+                                    </td>
+                                    <td id="hash-data">
+                                        <a class="btn-link" th:href="@{/{hash}(hash=${url.hash})}" th:text="${url.hash}"></a>
+                                    </td>
+                                    <td th:text="${url.createDate}" id="create-date-data"></td>
+                                    <td id="actions-data">
+                                        <button class="btn btn-success edit-btn" th:id="${url.id}" data-toggle="modal" data-target="#addUrlModal">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </button>
+                                        <button class="btn btn-danger delete-btn" th:id="${url.id}">
+                                            <i class="fas fa-trash"></i> Delete
+                                        </button>
                                     </td>
                                 </tr>
                                 </tbody>

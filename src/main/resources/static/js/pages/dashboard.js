@@ -6,6 +6,8 @@ $(document).ready(function() {
         if ($(this).is(":checked")) $("#hash").hide().prop("disabled", true);
         else $("#hash").show().prop("disabled", false);
     });
+    let endPoint = null;
+    let id = null;
 
     // On click add new button
     $(document).on("click", "#addNewButton", function() {
@@ -13,9 +15,23 @@ $(document).ready(function() {
         setTimeout(function() {
             $("#title").focus();
         }, 100);
+        endPoint = 'url';
         $("#title").val("");
         $("#originalUrl").val("");
         $("#hash").val("");
+    });
+
+    // On click edit button
+    $(document).on("click", ".edit-btn", function() {
+        $("#titleModal").text("Edit URL");
+        setTimeout(function() {
+            $("#title").focus();
+        }, 100);
+        id = this.id;
+        endPoint = `url/update/${id}`;
+        $("#title").val($(this).closest('tr').find('#title-data').text().trim());
+        $("#originalUrl").val($(this).closest('tr').find('#original-url-data').text().trim());
+        $("#hash").val($(this).closest('tr').find('#hash-data').text().trim());
     });
 
     // On form submit
@@ -25,20 +41,14 @@ $(document).ready(function() {
         let originalUrl = $("#originalUrl").val();
         let hash = $("#hash").val();
 
-        // Post values to urls controller
+        // Post all the values to url controller
         $.post(
-            "urls",
+            endPoint,
             { title: title, originalUrl: originalUrl, hash: hash },
             function(data) {
                 $("#table-div").load(location.href+" #table-div>*", "");
                 $("#addUrlModal").modal("toggle");
-                let alert =
-                `<div class="alert alert-${data.status === 'success' ? 'success' : 'danger'} alert-dismissible fade show" role="alert">
-                    <strong>${data.status === 'success' ? 'Success' : 'Error'}!</strong> ${data.message}.
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>`;
+                let alert = createAlert(data.status, data.message);
                 $("#alerts").append(alert);
                 setTimeout(function() {
                     $("#alerts .alert").eq(0).alert("close");
@@ -46,4 +56,18 @@ $(document).ready(function() {
             }
         );
     });
+
+    /**
+     * @param status
+     * @param message
+     * @return alert
+     */
+    function createAlert(status, message) {
+        return `<div class="alert alert-${status === 'success' ? 'success' : 'danger'} alert-dismissible fade show" role="alert">
+                   <strong>${status === 'success' ? 'Success' : 'Error'}!</strong> ${message}.
+                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                       <span aria-hidden="true">&times;</span>
+                   </button>
+               </div>`;
+    }
 });
