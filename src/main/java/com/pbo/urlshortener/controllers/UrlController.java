@@ -36,7 +36,7 @@ public class UrlController {
         } else if (urlService.isUrlAlreadyPresent(url)) {
             map.put("status", "error");
             map.put("message", "URL is already present");
-        } if (urlService.isHashAlreadyPresent(url)) {
+        } else if (urlService.isHashAlreadyPresent(url)) {
             map.put("status", "error");
             map.put("message", "Hash is already used");
         } else {
