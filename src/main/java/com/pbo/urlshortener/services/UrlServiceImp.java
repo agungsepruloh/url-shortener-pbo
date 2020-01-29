@@ -23,6 +23,10 @@ public class UrlServiceImp implements UrlService {
     @Autowired
     UserRepository userRepository;
 
+    /**
+     * @param url
+     * @return Map of new URL status and message
+     */
     @Override
     public Map<String, String> saveUrl(Url url) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -47,6 +51,64 @@ public class UrlServiceImp implements UrlService {
         return map;
     }
 
+    /**
+     * @param newUrl
+     * @return Map of updated URL status and message
+     */
+    @Override
+    public Map<String, String> updateUrl(Url newUrl) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByEmail(email);
+        Url url = urlRepository.findByIdAndUser(newUrl.getId(), user);
+        Map<String, String> map = new HashMap<String, String>();
+        Boolean isValid = true;
+
+        if (url != null) {
+            Url existedOriginalUrl = urlRepository.findByOriginalUrl(newUrl.getOriginalUrl());
+            Url existedHashUrl = urlRepository.findByHash(newUrl.getHash());
+
+            // Check is an unique original URL
+            if (existedOriginalUrl != null) if (newUrl.getId() != existedOriginalUrl.getId()) {
+                isValid = false;
+                map.put("status", "error");
+                map.put("message", "URL is already present");
+            }
+
+            // Check is an unique hash
+            if (existedHashUrl != null) if (newUrl.getId() != existedHashUrl.getId()) {
+                isValid = false;
+                map.put("status", "error");
+                map.put("message", "Hash is already used");
+            }
+
+        } else {
+            map.put("status", "error");
+            map.put("message", "URL not found.");
+        }
+
+        // Save new URL data if all user input is correct
+        if (isValid) {
+            url.setTitle(newUrl.getTitle());
+            url.setOriginalUrl(newUrl.getOriginalUrl());
+            url.setHash(newUrl.getHash());
+            try {
+                urlRepository.save(url);
+                map.put("status", "success");
+                map.put("message", "URL successfully edited");
+            } catch (Exception e) {
+                map.put("status", "error");
+                map.put("message", e.getMessage());
+            }
+        }
+
+        return map;
+    }
+
+    /**
+     * @param url
+     * @return boolean
+     * Check is an URL is already present or not
+     */
     @Override
     public boolean isUrlAlreadyPresent(Url url) {
         Url existedUrl = urlRepository.findByOriginalUrl(url.getOriginalUrl());
@@ -55,6 +117,11 @@ public class UrlServiceImp implements UrlService {
         return false;
     }
 
+    /**
+     * @param url
+     * @return boolean
+     * Check is a hash is already used or not
+     */
     @Override
     public boolean isHashAlreadyPresent(Url url) {
         Url existedUrl = urlRepository.findByHash(url.getHash());
@@ -63,6 +130,9 @@ public class UrlServiceImp implements UrlService {
         return false;
     }
 
+    /**
+     * @return generated random string (6 characters)
+     */
     @Override
     public String generateString() {
         int leftLimit = 48; // numeral '0'
