@@ -78,7 +78,7 @@
                                         <button class="btn btn-success edit-btn" th:id="${url.id}" data-toggle="modal" data-target="#addUrlModal">
                                             <i class="fas fa-edit"></i> Edit
                                         </button>
-                                        <button class="btn btn-danger delete-btn" th:id="${url.id}">
+                                        <button class="btn btn-danger delete-btn" th:id="${url.id}" data-toggle="modal" data-target="#confirmModal">
                                             <i class="fas fa-trash"></i> Delete
                                         </button>
                                     </td>
@@ -130,6 +130,11 @@
 <!-- Logout Modal-->
 <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <th:block th:include="components/modals :: logout"></th:block>
+</div>
+
+<!-- Confirm Delete Modal-->
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <th:block th:include="components/modals :: confirmDelete"></th:block>
 </div>
 
 <th:block th:include="fragments/footer :: js"></th:block>

@@ -34,6 +34,26 @@ $(document).ready(function() {
         $("#hash").val($(this).closest('tr').find('#hash-data').text().trim());
     });
 
+    // On click delete button
+    $(document).on("click", ".delete-btn", function() {
+        id = this.id;
+        endPoint = `url/delete/${id}`;
+        $("#confirmModalTitle").text("Delete URL");
+        $("#confirm-modal-body").text("Are you sure want to delete this URL?");
+    });
+
+    // On click confirm delete button
+    $(document).on("click", "#confirm-delete-btn", function() {
+        $.get(endPoint, function(data) {
+            $("#table-div").load(location.href+" #table-div>*", "");
+            let alert = createAlert(data.status, data.message);
+            $("#alerts").append(alert);
+            setTimeout(function() {
+                $("#alerts .alert").eq(0).alert("close");
+            }, 3000);
+        });
+    });
+
     // On form submit
     $(document).on("submit", "#url-form", function(event) {
         event.preventDefault();
