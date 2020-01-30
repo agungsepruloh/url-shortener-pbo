@@ -75,4 +75,17 @@ public class UrlController {
         return map;
     }
 
+    /**
+     *
+     * @param id
+     * @return Map of updated URL status and message
+     */
+    @RequestMapping(value = "url/delete/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, String> deleteUrl(@PathVariable("id") String id) {
+        Map<String, String> map = new HashMap<String, String>();
+        map = urlService.deleteUrl(Integer.parseInt(id));
+        return map;
+    }
+
 }
