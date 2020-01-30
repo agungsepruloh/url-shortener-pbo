@@ -105,6 +105,35 @@ public class UrlServiceImp implements UrlService {
     }
 
     /**
+     *
+     * @param id
+     * @return Map of updated URL status and message
+     */
+    @Override
+    public Map<String, String> deleteUrl(int id) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByEmail(email);
+        Url url = urlRepository.findByIdAndUser(id, user);
+        Map<String, String> map = new HashMap<String, String>();
+
+        if (url != null) {
+            try {
+                urlRepository.delete(url);
+                map.put("status", "success");
+                map.put("message", "URL successfully deleted");
+            } catch (Exception e) {
+                map.put("status", "error");
+                map.put("message", e.getMessage());
+            }
+        } else {
+            map.put("status", "error");
+            map.put("message", "URL not found.");
+        }
+
+        return map;
+    }
+
+    /**
      * @param url
      * @return boolean
      * Check is an URL is already present or not

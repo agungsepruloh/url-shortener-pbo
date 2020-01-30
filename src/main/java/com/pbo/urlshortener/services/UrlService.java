@@ -10,6 +10,8 @@ public interface UrlService {
 
     public Map<String, String> updateUrl(Url url);
 
+    public Map<String, String> deleteUrl(int id);
+
     public boolean isUrlAlreadyPresent(Url url);
 
     public boolean isHashAlreadyPresent(Url url);
