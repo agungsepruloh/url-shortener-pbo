@@ -4,10 +4,12 @@ $(document).ready(function() {
     $("#isGenerate").prop("checked", true);
     $(document).on("click", "#isGenerate", function() {
         if ($(this).is(":checked")) $("#hash").hide().prop("disabled", true);
-        else $("#hash").show().prop("disabled", false);
+        else $("#hash").show().prop("disabled", false).prop('required',true);
     });
+    $(".original-url-alert").hide();
     let endPoint = null;
     let id = null;
+    let isValid = false;
 
     // On click add new button
     $(document).on("click", "#addNewButton", function() {
@@ -19,6 +21,7 @@ $(document).ready(function() {
         $("#title").val("");
         $("#originalUrl").val("");
         $("#hash").val("");
+        $(".original-url-alert").hide();
     });
 
     // On click edit button
@@ -32,6 +35,7 @@ $(document).ready(function() {
         $("#title").val($(this).closest('tr').find('#title-data').text().trim());
         $("#originalUrl").val($(this).closest('tr').find('#original-url-data').text().trim());
         $("#hash").val($(this).closest('tr').find('#hash-data').text().trim());
+        $(".original-url-alert").hide();
     });
 
     // On click delete button
@@ -60,21 +64,26 @@ $(document).ready(function() {
         let title = $("#title").val();
         let originalUrl = $("#originalUrl").val();
         let hash = $("#hash").val();
+        let isValidUrl = validURL(originalUrl);
 
-        // Post all the values to url controller
-        $.post(
-            endPoint,
-            { title: title, originalUrl: originalUrl, hash: hash },
-            function(data) {
-                $("#table-div").load(location.href+" #table-div>*", "");
-                $("#addUrlModal").modal("toggle");
-                let alert = createAlert(data.status, data.message);
-                $("#alerts").append(alert);
-                setTimeout(function() {
-                    $("#alerts .alert").eq(0).alert("close");
-                }, 3000);
-            }
-        );
+        if (!isValidUrl) {
+            $(".original-url-alert").show();
+        } else {
+            // Post all the values to url controller
+            $.post(
+                endPoint,
+                { title: title, originalUrl: originalUrl, hash: hash },
+                function(data) {
+                    $("#table-div").load(location.href+" #table-div>*", "");
+                    $("#addUrlModal").modal("toggle");
+                    let alert = createAlert(data.status, data.message);
+                    $("#alerts").append(alert);
+                    setTimeout(function() {
+                        $("#alerts .alert").eq(0).alert("close");
+                    }, 3000);
+                }
+            );
+        }
     });
 
     /**
@@ -89,5 +98,15 @@ $(document).ready(function() {
                        <span aria-hidden="true">&times;</span>
                    </button>
                </div>`;
+    }
+
+    function validURL(str) {
+      var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+        '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+        '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+        '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+      return !!pattern.test(str);
     }
 });

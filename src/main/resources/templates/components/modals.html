@@ -21,11 +21,14 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <input type="text" th:field="*{title}" class="form-control form-control-user" id="title"
-                               placeholder="Title">
+                               placeholder="Title" required="true">
                     </div>
                     <div class="form-group">
                         <input type="text" th:field="*{originalUrl}" class="form-control form-control-user" id="originalUrl"
-                               placeholder="URL">
+                               placeholder="URL" required="true">
+                    <div class="alert alert-danger original-url-alert mt-3" role="alert">
+                        Please insert a correct URL!
+                    </div>
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
