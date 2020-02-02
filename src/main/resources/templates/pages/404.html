@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head xmlns:th="http://www.thymeleaf.org">
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>URL Shortener - 404</title>
+  <th:block th:include="fragments/header :: header"></th:block>
+  <style>
+    .vertical-center {
+      min-height: 100%;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+    }
+
+    div {
+      background: white !important;
+    }
+  </style>
+
+</head>
+
+<body id="page-top">
+
+  <!-- Page Wrapper -->
+  <div id="wrapper" class="jumbotron vertical-center">
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- 404 Error Text -->
+          <div class="text-center">
+            <div class="error mx-auto" data-text="404">404</div>
+            <p class="lead text-gray-800 mb-5">Page Not Found</p>
+            <p class="text-gray-500 mb-0">It looks like you found a glitch in the matrix...</p>
+            <a href="/dashboard">&larr; Back to Dashboard</a>
+          </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+        <th:block th:include="components/footer :: footer"></th:block>
+      </footer>
+      <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <th:block th:include="fragments/footer :: js"></th:block>
+
+</body>
+
+</html>

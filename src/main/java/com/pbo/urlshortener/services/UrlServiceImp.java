@@ -133,6 +133,11 @@ public class UrlServiceImp implements UrlService {
         return map;
     }
 
+    @Override
+    public Url findUrl(String hash) {
+        return urlRepository.findByHash(hash);
+    }
+
     /**
      * @param url
      * @return boolean

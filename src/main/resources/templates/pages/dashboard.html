@@ -68,10 +68,10 @@
                                 <tr th:each="url : ${user.urls}">
                                     <td th:text="${url.title}" id="title-data"></td>
                                     <td id="original-url-data">
-                                        <a class="btn-link" th:href="@{{originalUrl}(originalUrl=${url.originalUrl})}" th:text="${url.originalUrl}"></a>
+                                        <a class="btn-link" th:href="@{{originalUrl}(originalUrl=${url.originalUrl})}" th:text="${url.originalUrl}" target="_blank"></a>
                                     </td>
                                     <td id="hash-data">
-                                        <a class="btn-link" th:href="@{/{hash}(hash=${url.hash})}" th:text="${url.hash}"></a>
+                                        <a class="btn-link" th:href="@{/{hash}(hash=${url.hash})}" th:text="${url.hash}" target="_blank"></a>
                                     </td>
                                     <td th:text="${url.createDate}" id="create-date-data"></td>
                                     <td id="actions-data">
