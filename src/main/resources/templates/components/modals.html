@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head xmlns:th="http://www.thymeleaf.org">
+    <meta charset="UTF-8">
+</head>
+
+<body>
+
+<!-- Add New URL Modal -->
+<div th:fragment="addNewUrl(url)" class="modal fade" id="addUrlModal" tabindex="-1" role="dialog" aria-labelledby="addUrlModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="titleModal">Add New URL</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="url-form" th:action="@{/url}" th:object="${url}" method="POST" role="form">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="text" th:field="*{title}" class="form-control form-control-user" id="title"
+                               placeholder="Title" required="true">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" th:field="*{originalUrl}" class="form-control form-control-user" id="originalUrl"
+                               placeholder="URL" required="true">
+                    <div class="alert alert-danger original-url-alert mt-3" role="alert">
+                        Please insert a correct URL!
+                    </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <input id="isGenerate" type="checkbox" aria-label="Checkbox for following text input" >
+                            </div>
+                        </div>
+                        <label class="form-control form-check-label" for="isGenerate">
+                            Generate Hash
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" th:field="*{hash}" class="form-control form-control-user" id="hash"
+                               placeholder="Hash">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Logout Modal-->
+<div th:fragment="logout" class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" href="/logout">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Confirm Delete Modal -->
+<div th:fragment="confirmDelete" class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmModalTitle">Confirm Title Modal</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="confirm-modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="confirm-delete-btn" data-dismiss="modal">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head xmlns:th="http://www.thymeleaf.org">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>URL Shortener - Register</title>
+    <th:block th:include="fragments/header :: header"></th:block>
+
+</head>
+
+<body class="bg-gradient-primary">
+
+<div class="container">
+
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+                <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                <div class="col-lg-7">
+                    <div class="p-5">
+                        <div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                        </div>
+                        <form class="user" th:action="@{/register}" th:object="${user}" method="POST" role="form">
+                            <div class="form-group row">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <input type="text" th:field="*{firstName}" class="form-control form-control-user" id="firstName"
+                                           placeholder="First Name">
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" th:field="*{lastName}" class="form-control form-control-user" id="lastName"
+                                           placeholder="Last Name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" th:field="*{email}" class="form-control form-control-user" id="email"
+                                       placeholder="Email Address">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" th:field="*{password}" class="form-control form-control-user" id="password"
+                                       placeholder="Password">
+                            </div>
+
+                            <!-- Alert -->
+                            <div class="alert alert-success alert-dismissible" role="alert" th:if="${successMessage}">
+                                <button type="button" class="close" data-dismiss="alert"
+                                        aria-hidden="true">×</button>
+                                <span th:utext="${successMessage}"></span>
+                            </div>
+                            <div class="alert alert-danger alert-dismissible"
+                                 th:if="${(bindingResult != null && bindingResult.getAllErrors() != null)}">
+                                <button type="button" class="close" data-dismiss="alert"
+                                        aria-hidden="true">×</button>
+                                <ul th:each="data : ${bindingResult.getAllErrors()}">
+                                    <li th:text="${data.getObjectName() + ' : ' + data.getDefaultMessage()}"></li>
+                                </ul>
+                            </div>
+                            <button type="submit" name="submit" class="btn btn-primary btn-user btn-block">
+                                Register Account
+                            </button>
+                            <hr>
+                            <a href="index.html" class="btn btn-google btn-user btn-block">
+                                <i class="fab fa-google fa-fw"></i> Register with Google
+                            </a>
+                            <a href="index.html" class="btn btn-facebook btn-user btn-block">
+                                <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
+                            </a>
+                        </form>
+                        <hr>
+                        <div class="text-center">
+                            <a class="small" href="forgot-password.html">Forgot Password?</a>
+                        </div>
+                        <div class="text-center">
+                            <a class="small" href="/login">Already have an account? Login!</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<th:block th:include="fragments/footer :: js"></th:block>
+
+</body>
+
+</html>
