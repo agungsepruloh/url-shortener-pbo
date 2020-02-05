@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head xmlns:th="http://www.thymeleaf.org">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>URL Shortener - Users</title>
+    <th:block th:include="fragments/header :: header"></th:block>
+
+</head>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <th:block th:include="components/sidebar :: sidebar"></th:block>
+    </ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <th:block th:include="components/topbar :: topbar(${user})"></th:block>
+            </nav>
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+
+                <!-- DataTable -->
+                <div id="alerts"></div>
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h3 class="m-0 font-weight-bold float-left">My Url Data</h3>
+                        <button id="addNewButton" class="btn btn-primary float-right" data-toggle="modal" data-target="#addUrlModal">
+                            <i class="fas fa-plus"></i> Add
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive" id="table-div">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>Nama Depan</th>
+                                    <th>Nama Belakang</th>
+                                    <th>Email</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                <tr th:each="user : ${user}">
+                                    <td th:text="${user.FirstName}"></td>
+                                    <td th:text="${user.LastName}"></td>
+                                    <td th:text="${user.email}"></td>
+                                    <td id="actions-data">
+                                        <button class="btn btn-success edit-btn" th:id="${user.id}" data-toggle="modal" data-target="#addUrlModal">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </button>
+                                        <button class="btn btn-danger delete-btn" th:id="${user.id}" data-toggle="modal" data-target="#confirmModal">
+                                            <i class="fas fa-trash"></i> Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+
+                                <tfoot>
+                                <tr>
+                                    <th>Nama Depan</th>
+                                    <th>Nama Belakang</th>
+                                    <th>Email</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+            <th:block th:include="components/footer :: footer"></th:block>
+        </footer>
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Add New URL Modal -->
+<div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUrlModalLabel" aria-hidden="true">
+    <th:block th:include="components/modals :: addNewUser(${user})"></th:block>
+</div>!-- Logout Modal-->
+<div class="modal fade" id="logoutMo
+
+<dal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <th:block th:include="components/modals :: logout"></th:block>
+</div>
+
+<!-- Confirm Delete Modal-->
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <th:block th:include="components/modals :: confirmDelete"></th:block>
+</div>
+
+<th:block th:include="fragments/footer :: js"></th:block>
+</body>
+
+</html>

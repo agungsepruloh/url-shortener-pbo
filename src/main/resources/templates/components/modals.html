@@ -92,5 +92,42 @@
     </div>
 </div>
 
+<div th:fragment="addNewUser(user)" class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="titleModal">Add New User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="user-form" th:action="@{/register}" th:object="${user}" method="POST" role="form">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="text" th:field="*{firstName}" class="form-control form-control-user" id="firstName"
+                               placeholder="First Name" required="true">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" th:field="*{lastName}" class="form-control form-control-user" id="lastName"
+                               placeholder="Last Name">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" th:field="*{email}" class="form-control form-control-user" id="email"
+                               placeholder="Email Address">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" th:field="*{password}" class="form-control form-control-user" id="password"
+                               placeholder="Password">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
