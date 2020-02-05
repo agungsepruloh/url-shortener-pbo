@@ -7,9 +7,12 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UrlRepository extends JpaRepository<Url, Integer> {
+
     public Url findByOriginalUrl(String originalUrl);
 
     public Url findByIdAndUser(int id, User user);
 
     public Url findByHash(String hash);
+
+    public Url findByTitle(String title);
 }
