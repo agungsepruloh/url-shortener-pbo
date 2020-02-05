@@ -1,15 +1,19 @@
 package com.pbo.urlshortener.services;
 
 import com.pbo.urlshortener.models.Role;
+import com.pbo.urlshortener.models.Url;
 import com.pbo.urlshortener.models.User;
 import com.pbo.urlshortener.repositories.RoleRepository;
 import com.pbo.urlshortener.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 @Service
 public class UserServiceImp implements UserService {
@@ -31,8 +35,16 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public void updateUser(User user) {
+    public void updateUser(User newUser) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByEmail(email);
 
+        user.setFirstName(newUser.getFirstName());
+        user.setLastName(newUser.getLastName());
+        user.setEmail(newUser.getEmail());
+        user.setPassword(encoder.encode(newUser.getPassword()));
+
+        userRepository.save(user);
     }
 
     @Override
